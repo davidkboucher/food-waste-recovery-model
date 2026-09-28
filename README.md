@@ -17,9 +17,9 @@ An independent economics and data-science project that turns hand-collected rest
 
 ## Origin
 
-I independently developed this analysis after noticing food-waste patterns while working in restaurant operations at a multi-concept food hall (referred to here as **Company_X**) during its early months of operation. The project was not assigned or commissioned by the company. I identified the question, designed the data collection, built the pricing model, and wrote the analysis on my own.
+I developed this analysis after noticing food-waste patterns while working in restaurant operations at a food hall (referred to here as **Company_X**) during its early months of operation. The project was not assigned or commissioned by the company. I identified the question, designed the data collection, built the pricing model, and wrote the analysis independently.
 
-The question was practical rather than critical: **of the food a kitchen discards, how much could be recovered through donation, and what operational changes would make more of it recoverable?** Early-stage operations naturally carry more waste while demand is still being learned, which makes this a useful window for studying where recovery is possible.
+The question was practical rather than critical: **of the food a kitchen discards, how much could be recovered through donation, and what operational changes would make more of it recoverable?** Early-stage operations naturally carry more waste while demand is still being determind, which makes this a useful window for studying where recovery is possible.
 
 ## How it works
 
@@ -37,14 +37,14 @@ flowchart LR
 
 Over 30 shifts, I recorded each discarded item: what it was, how many units, why it was discarded (expiring, hot-hold time limit, removed from menu, and so on), whether it could plausibly be donated, and what condition would have to be met first (for example, freezing before expiration or keeping temperature logs during hot holding).
 
-This is messy real-world data, not a classroom dataset. Cleaning it meant handling inconsistent labels, a row with shifted columns, formula cells pasted where values belonged, spelling mismatches between sheets, and totals rows mixed into the data. The pipeline cleans what it can and reports the rest in a data-quality check rather than silently dropping it.
+This is messy real-world data. Cleaning it meant handling inconsistent labels, spelling mismatches between sheets, and totals rows mixed into the data. The pipeline cleans what it can and reports the rest in a data-quality check rather than dropping it.
 
 ### 2. Data architecture
 
 The workbook has three linked tables plus a documented key:
 
 - **Discard Log:** one row per observation.
-- **Price Data:** one row per ingredient, with portion weight, servings per unit, estimated value per serving, confidence rating, operational role, food category, and the dishes it appears in (weighted by how common each dish is).
+- **Price Data:** one row per ingredient, with portion weight, servings per unit, estimated value per serving, confidence rating, operational role, food category, and the dishes it appears in (weighted by how prevalent each dish is).
 - **Menu Anchors:** one row per dish, with its listed menu price and how that price divides among its components.
 
 Every ingredient is tagged with an **operational role**: *Core Component* (defines the dish), *Variant Driver* (defines a named variant), *Base/Carrier* (the structural platform), *Support Component* (adds flavor or value, swappable), or *Condiment/Spread*. Roles guide how much of a dish's price an ingredient can reasonably account for.
@@ -61,9 +61,9 @@ The company's internal costs were not used and are not needed. Instead, each ing
 | Standard Portion Attribution | A consistent share of the dish price, based on its build structure |
 | Ingredient Cost Distribution | Manual estimate from the ingredient's role; used sparingly and rated lower confidence |
 
-Each price carries a **confidence rating** from 5 (exact or near-exact match to menu pricing) down to 2 (rough estimate), which sets a low/mid/high error band. Prices were deliberately estimated on the conservative side to avoid inflating results.
+Each price carries a **confidence rating** from 5 (exact match to menu pricing) down to 2 (rough estimate), which sets a low/mid/high error band. Prices were deliberately estimated on the conservative side to avoid inflating results.
 
-The model then enforces **hard caps** so no estimate can exceed what the menu supports: an ingredient's value is capped at its share of the dishes it actually goes into (weighted by how common each dish is), and if a dish's components still add up to more than its menu price, they are scaled down. Food cost is estimated from standard industry cost-of-goods percentages by category.
+The model then enforces **hard caps** so no estimate can exceed what the menu supports: an ingredient's value is capped at its share of the dishes it actually goes into (weighted by how prevalent each dish is), and if a dish's components still add up to more than its menu price, they are scaled down. Food cost is estimated from standard industry cost-of-goods percentages by category.
 
 ### 4. Recovery classification
 
@@ -78,7 +78,7 @@ Each discard is sorted by what would make it donatable:
 | Weak Maybe | Borderline |
 | Not Donatable | Not recoverable under the criteria used |
 
-**How donatability was determined:** I contacted regional food-recovery organizations and used the general acceptance policies two of them shared. Where those policies did not explicitly cover an item, I applied my own judgment based on similar items. These classifications are therefore my estimates, not confirmations from the organizations.
+**How donation eligibility** (donatability) **was determined:** I contacted several regional food-recovery organizations and used the general acceptance policies two of them shared. Where those policies did not explicitly cover an item, I applied my own judgment based on similar items. These classifications are therefore my estimates, not confirmations from the organizations.
 
 The model then builds cumulative scenarios, adding one practice at a time, and estimates the tax treatment of donated food inventory under the enhanced deduction in IRC §170(e)(3).
 
@@ -108,7 +108,7 @@ The complete step-by-step output (price-cap checks, every recovery tier and scen
 
 The findings point to practical, low-cost opportunities rather than failures. Most of the potentially recoverable value required no change at all, only a donation channel. Freezing items before they expire and documenting hot-hold temperatures are established practices that would make more food eligible. And because waste concentrates in a small number of items, prep calibration on those items is likely the highest-leverage change.
 
-These observations describe conditions during the 2025 observation period only. Kitchen practices change over time, and nothing here describes the operation's current practices or implies any change was made because of this analysis.
+These observations describe conditions during the 2025 observation period only. Kitchen practices change over time, and nothing here describes the operation's current practices or implies any change was made because of this analysis. However, **Company X has made significant strides towards limiting the amount of wasted food since the observation period.**
 
 ## What's public and what's redacted
 
@@ -126,7 +126,7 @@ The figures in `docs/figures/` were generated from the real dataset in anonymize
 
 - **Menu value is an estimate** built from public prices and ingredient-share assumptions; it is reported with confidence bands, not as an exact figure.
 - **Donatability is my classification**, based on general food-bank criteria plus judgment, not item-by-item confirmation.
-- **Food-cost percentages and the tax rate are illustrative industry assumptions**, not the company's actual costs or tax position. The enhanced deduction only helps a business with taxable income to offset. Nothing here is tax advice.
+- **Food-cost percentages and the tax rate are illustrative industry assumptions**, not the company's actual costs or tax position. Nothing here is tax advice.
 - **The observation window is about seven weeks** during an early operating period, so it may not represent other seasons or mature operations.
 
 ## Run it
