@@ -1,0 +1,206 @@
+==========================================================================================
+                 RESTAURANT FOOD WASTE & RECOVERY MODEL - ANALYSIS REPORT                 
+                          Mode: Public (anonymized, shares only)                          
+                               Data: Real data (anonymized)                               
+==========================================================================================
+
+[1/9] Loading discard log...
+      821 discard observations across 30 shifts (~7 weeks)
+      140 distinct items discarded
+
+[2/9] Loading price catalog...
+      142 ingredients priced
+
+      Price confidence rating              Ingredients
+      ------------------------------------------------
+      5  (exact menu match)                         53
+      4.5                                           37
+      4                                             32
+      3.5                                            4
+      3                                              9
+      2.5                                            2
+      2                                              5
+
+      Operational role                     Ingredients
+      ------------------------------------------------
+      Core Component                                83
+      Support Component                             19
+      Variant Driver                                11
+      Modular Protein                                9
+      Condiment/Spread                               8
+      Primary Component                              5
+      Base/Carrier                                   4
+      Nonessential                                   3
+
+[3/9] Loading menu anchors...
+      128 dishes, 331 ingredient-to-dish links
+
+[4/9] Calculating confidence-based price estimates (low / mid / high)...
+      Generated estimates for 142 ingredients
+
+[5/9] Applying dish-weighted price caps...
+      Menu-based cap available for 137 ingredients
+      44 estimates lowered to stay within their dishes' menu prices
+
+[6/9] Verifying dish totals against menu prices...
+      Dishes whose high estimates exceeded the menu price were scaled down:
+
+      Dish                                   Scaled to
+      ------------------------------------------------
+      DISH-004                                   99.2%
+      DISH-010                                   94.3%
+      DISH-034                                   99.1%
+      DISH-057                                   98.0%
+      DISH-074                                   82.5%
+      DISH-090                                   96.1%
+      DISH-092                                   98.4%
+      DISH-093                                   99.2%
+
+[7/9] Estimating food cost (category COGS assumptions)...
+      Blended food cost: 25.4% of estimated menu value
+
+[8/9] Valuing discards...
+      Valued 821 of 821 observations
+      Estimated menu value associated with discards: $[REDACTED]
+      Discarded weight:                              [REDACTED] lbs
+
+[9/9] Classifying recoverability...
+Recovery tier                         Obs.     Share of est. value         Share of weight
+------------------------------------------------------------------------------------------
+As-Is                                  204                   51.8%                   46.8%
+Freeze (Required)                       49                    7.4%                    5.3%
+Freeze (Recommended)                    19                    2.4%                    3.2%
+Hot Hold + Temp Logs                   176                    7.3%                   11.1%
+Weak Maybe                              56                    4.7%                    5.8%
+Not Donatable                          317                   26.3%                   27.8%
+
+==========================================================================================
+                 RECOVERY SCENARIOS (cumulative: each adds one practice)                  
+==========================================================================================
+Value and food cost are shares of total estimated menu value; weight is a share
+of total discarded weight.
+
+Scenario                   Obs.   Share of est. value   Share: food cost   Share of weight
+------------------------------------------------------------------------------------------
+1. Donate As-Is             204                 51.8%              13.5%             46.8%
+2. + Freezing (Required)    253                 59.2%              16.0%             52.1%
+3. + Freezing (All)         272                 61.7%              16.5%             55.3%
+4. + Temp Logs              448                 69.0%              18.1%             66.4%
+
+==========================================================================================
+                 TAX TREATMENT (IRC Section 170(e)(3) enhanced deduction)                 
+==========================================================================================
+Deduction = lesser of (cost + half the markup) or (2 x cost). Deductions reduce
+taxable income; the benefit shown assumes a 27% combined rate and enough
+taxable income to use it. Illustrative only, not tax advice.
+
+Scenario                             Deduction    Illustrative benefit            Net cost
+------------------------------------------------------------------------------------------
+1. Donate As-Is                     [REDACTED]              [REDACTED]          [REDACTED]
+2. + Freezing (Required)            [REDACTED]              [REDACTED]          [REDACTED]
+3. + Freezing (All)                 [REDACTED]              [REDACTED]          [REDACTED]
+4. + Temp Logs                      [REDACTED]              [REDACTED]          [REDACTED]
+
+==========================================================================================
+                             TOP 20 ITEMS BY ESTIMATED VALUE                              
+==========================================================================================
+Rank  Item      Category                         Share of est. value       Share of weight
+------------------------------------------------------------------------------------------
+1     ING-073   Poultry                                        18.6%                 11.7%
+2     ING-138   Starches                                        4.4%                  7.2%
+3     ING-054   Poultry                                         4.3%                  3.8%
+4     ING-076   Poultry                                         3.2%                  2.0%
+5     ING-061   Red Meat                                        3.1%                  1.4%
+6     ING-112   Grains                                          2.6%                  6.6%
+7     ING-118   Vegetables                                      2.2%                  2.8%
+8     ING-081   Dairy                                           1.9%                  2.4%
+9     ING-144   Seafood                                         1.9%                  1.7%
+10    ING-125   Grains                                          1.6%                  0.4%
+11    ING-035   Red Meat                                        1.6%                  1.7%
+12    ING-147   Red Meat                                        1.5%                  1.2%
+13    ING-058   Red Meat                                        1.5%                  1.0%
+14    ING-085   Vegetables                                      1.4%                  1.4%
+15    ING-153   Poultry                                         1.3%                  1.6%
+16    ING-048   Seafood                                         1.2%                  0.8%
+17    ING-107   Poultry                                         1.2%                  1.1%
+18    ING-084   Seafood                                         1.2%                  0.4%
+19    ING-133   Grains                                          1.1%                  1.4%
+20    ING-184   Plant Proteins                                  1.1%                  1.3%
+
+==========================================================================================
+                          MOST COMMONLY DISCARDED (BY QUANTITY)                           
+==========================================================================================
+Rank  Item      Category                              Share of units     Share of servings
+------------------------------------------------------------------------------------------
+1     ING-112   Grains                                          8.7%                  3.4%
+2     ING-081   Dairy                                           3.8%                  1.5%
+3     ING-061   Red Meat                                        3.3%                  1.3%
+4     ING-118   Vegetables                                      3.3%                 10.3%
+5     ING-039   Vegetables                                      3.0%                  1.2%
+6     ING-133   Grains                                          2.6%                  1.0%
+7     ING-019   Seafood                                         2.5%                  1.0%
+8     ING-085   Vegetables                                      2.3%                  0.9%
+9     ING-144   Seafood                                         2.3%                  0.9%
+10    ING-021   Sauces & Condiments                             2.1%                  0.8%
+11    ING-132   Vegetables                                      1.9%                  7.5%
+12    ING-164   Vegetables                                      1.9%                  0.8%
+13    ING-125   Grains                                          1.7%                  0.7%
+14    ING-160   Starches                                        1.7%                  0.7%
+15    ING-145   Vegetables                                      1.6%                  0.6%
+16    ING-025   Soup                                            1.5%                  0.6%
+17    ING-147   Red Meat                                        1.4%                  0.5%
+18    ING-156   Sauces & Condiments                             1.4%                  0.5%
+19    ING-141   Grains                                          1.3%                  0.5%
+20    ING-159   Dairy                                           1.3%                  0.5%
+
+Units are the containers or portions logged; servings = units x servings per unit.
+
+==========================================================================================
+                                BY FOOD GROUP AND CATEGORY                                
+==========================================================================================
+Groups are in capitals, with their categories indented beneath. Items listed under
+two categories are split evenly between them.
+
+Food group / category                            Share of est. value       Share of weight
+------------------------------------------------------------------------------------------
+PROTEINS                                                       55.7%                 38.4%
+    Poultry                                                    33.0%                 23.5%
+    Red Meat                                                   14.3%                  9.1%
+    Seafood                                                     7.3%                  4.6%
+    Plant Proteins                                              1.0%                  1.2%
+GRAINS & STARCHES                                              18.4%                 26.0%
+    Grains                                                     11.2%                 15.1%
+    Starches                                                    7.2%                 10.9%
+PRODUCE & LEGUMES                                              15.0%                 18.2%
+    Vegetables                                                 12.1%                 14.4%
+    Legumes                                                     1.2%                  1.6%
+    Herbs & Garnishes                                           1.0%                  1.1%
+    Fruits                                                      0.7%                  1.0%
+SAUCES & SEASONINGS                                             6.0%                  9.6%
+    Sauces & Condiments                                         6.0%                  9.6%
+DAIRY                                                           4.0%                  5.0%
+    Dairy                                                       3.9%                  4.7%
+    Dairy Alternatives                                          0.1%                  0.3%
+SOUPS & PREPARED                                                0.9%                  2.8%
+    Soup                                                        0.8%                  2.6%
+    Prepared Components                                         0.1%                  0.2%
+
+==========================================================================================
+                                    BY DISCARD REASON                                     
+==========================================================================================
+Discard reason                        Obs.     Share of est. value         Share of weight
+------------------------------------------------------------------------------------------
+Expiring                               552                   87.2%                   82.7%
+Hot hold                               253                   10.9%                   15.1%
+Removed from menu                        2                    0.9%                    1.1%
+Discarded                               12                    0.6%                    0.5%
+Miscommunication                         1                    0.4%                    0.5%
+Canceled                                 1                    0.0%                    0.0%
+
+------------------------------------------------------------------------------------------
+Notes
+  Obs. = number of discard observations (log entries).
+  Potential donatability is the author's estimate, based on general acceptance criteria
+  shared by regional food-recovery organizations plus judgment for items not covered.
+  Estimated value is reconstructed from publicly listed menu prices, not from
+  financial records.
